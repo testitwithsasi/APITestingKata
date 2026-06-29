@@ -2,6 +2,9 @@ package com.booking.utils;
 
 import io.restassured.response.Response;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ResponseUtil {
@@ -21,5 +24,12 @@ public class ResponseUtil {
 
     public static void markResponseASFalse(){
         assertFalse(false);
+    }
+
+    public static Map<String, String> getHeaders(){
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+        headers.put("Accept", "application/json");
+        return  headers;
     }
 }

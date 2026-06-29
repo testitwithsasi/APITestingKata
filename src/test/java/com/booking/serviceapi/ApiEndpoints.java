@@ -12,6 +12,9 @@ public class ApiEndpoints {
             case "AUTH":
                 return "/auth/login";
 
+            case "BOOKING":
+                return "/booking";
+
             default:
                 throw new RuntimeException("API not found : " + apiName);
         }

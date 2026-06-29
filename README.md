@@ -23,6 +23,7 @@ mvn clean test
 ```
 mvn clean test -Dcucumber.filter.tags="@Health"
 mvn clean test -Dcucumber.filter.tags="@Auth"
+mvn clean test -Dcucumber.filter.tags="@Booking"
 mvn clean test -Dcucumber.filter.tags="@Smoke"
 mvn clean test -Dcucumber.filter.tags="@Regression"
 mvn clean test -Dcucumber.filter.tags="@Positive"

@@ -39,14 +39,10 @@ public class Authentication {
     @When("user sends login request")
     public void sendLoginRequest() {
 
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-        headers.put("Accept", "application/json");
-
         ScenarioContext.setResponse(service.callAPI(
                 "AUTH",
                 HttpMethod.POST,
-                headers,
+                ResponseUtil.getHeaders(),
                 request));
     }
 
