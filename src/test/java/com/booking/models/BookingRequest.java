@@ -1,7 +1,9 @@
 package com.booking.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookingRequest {
 
     @JsonProperty("bookingdates")
@@ -18,6 +20,9 @@ public class BookingRequest {
     private String phoneNumber;
     @JsonProperty("roomid")
     private int roomId;
+
+    @JsonProperty("bookingid")
+    private int bookingId;
 
     public BookingDates getBookingDates() {
         return bookingDates;
@@ -73,5 +78,13 @@ public class BookingRequest {
 
     public void setRoomId(int roomId) {
         this.roomId = roomId;
+    }
+
+    public int getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
     }
 }

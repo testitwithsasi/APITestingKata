@@ -41,6 +41,7 @@ public class Authentication {
 
         ScenarioContext.setResponse(service.callAPI(
                 "AUTH",
+                null,
                 HttpMethod.POST,
                 ResponseUtil.getHeaders(),
                 request));

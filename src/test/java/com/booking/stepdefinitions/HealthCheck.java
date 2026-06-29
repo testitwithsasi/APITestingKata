@@ -23,6 +23,7 @@ public class HealthCheck {
 
         response = service.callAPI(
                 "HEALTH",
+                null,
                 HttpMethod.GET,
                 null,
                 null);

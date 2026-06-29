@@ -29,6 +29,7 @@ mvn clean test -Dcucumber.filter.tags="@Regression"
 mvn clean test -Dcucumber.filter.tags="@Positive"
 mvn clean test -Dcucumber.filter.tags="@Negative"
 mvn clean test -Dcucumber.filter.tags="@Validation"
+mvn clean test -Dcucumber.filter.tags="@UpdateBooking"
 ```
 
 ## Allure Report
