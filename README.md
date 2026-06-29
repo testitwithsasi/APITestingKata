@@ -21,8 +21,13 @@ mvn clean test
 
 # To run tests by tag
 ```
+mvn clean test -Dcucumber.filter.tags="@Health"
+mvn clean test -Dcucumber.filter.tags="@Auth"
 mvn clean test -Dcucumber.filter.tags="@Smoke"
 mvn clean test -Dcucumber.filter.tags="@Regression"
+mvn clean test -Dcucumber.filter.tags="@Positive"
+mvn clean test -Dcucumber.filter.tags="@Negative"
+mvn clean test -Dcucumber.filter.tags="@Validation"
 ```
 
 ## Allure Report

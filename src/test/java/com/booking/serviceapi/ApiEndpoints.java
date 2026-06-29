@@ -9,6 +9,9 @@ public class ApiEndpoints {
             case "HEALTH":
                 return "/booking/actuator/health";
 
+            case "AUTH":
+                return "/auth/login";
+
             default:
                 throw new RuntimeException("API not found : " + apiName);
         }
