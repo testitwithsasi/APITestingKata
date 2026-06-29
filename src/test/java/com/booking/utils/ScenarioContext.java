@@ -1,5 +1,8 @@
 package com.booking.utils;
 
+import com.booking.models.LoginRequest;
+import com.booking.serviceapi.ApiService;
+import com.booking.serviceapi.HttpMethod;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
@@ -10,6 +13,7 @@ public class ScenarioContext {
     private static   ThreadLocal<Response> response = new ThreadLocal<>();
     private static   ThreadLocal<String> token = new ThreadLocal<>();
     private static Map<String, String> bookingIds = new HashMap<>();
+    private static ApiService service = new ApiService();
 
     public static void setResponse(Response res) {
         response.set(res);
@@ -24,7 +28,16 @@ public class ScenarioContext {
     }
 
     public static String getToken() {
-        return token.get();
+        LoginRequest loginRequest = new LoginRequest("admin", "password");
+        var authResponse = service.callAPI(
+                "AUTH",
+                null,
+                HttpMethod.POST,
+                ResponseUtil.getHeaders(),
+                loginRequest);
+
+        String token = ResponseUtil.getProperty(authResponse, "token", "NOT_FOUND");
+        return token;
     }
 
     public static String getBookingIds(String key) {

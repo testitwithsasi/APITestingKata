@@ -11,16 +11,13 @@ import io.restassured.response.Response;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static com.booking.utils.ResponseUtil.markResponseASFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
-public class Authentication {
+public class AuthenticationTest {
 
-    private static final Log log = LogFactory.getLog(Authentication.class);
+    private static final Log log = LogFactory.getLog(AuthenticationTest.class);
     private LoginRequest request;
     ApiService service = new ApiService();
 
@@ -65,7 +62,7 @@ public class Authentication {
                 String token = ResponseUtil.getProperty(response, "token", "NOT_FOUND");
                 assertNotNull(token);
 
-                ScenarioContext.setToken(token);
+                ScenarioContext.getToken();
             }
         } else {
             markResponseASFalse();

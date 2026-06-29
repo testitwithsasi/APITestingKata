@@ -174,3 +174,55 @@ Feature: Booking API
       | 1 | 2 | John | Doe | true | 2026-10-13 | null | john@example.com | 1234567890 | 400 | Null checkout |
       | 1 | 2 | John | Doe | true | 2026-10-13 | 2026-10-15 | null | 1234567890 | 400 | Null email |
       | 1 | 2 | John | Doe | true | 2026-10-13 | 2026-10-15 | john@example.com | null | 400 | Null phone |
+
+
+  # ------ PATCH Method is not allowing ---------------
+  Scenario Outline: Partial update of booking with valid fields
+    Given user prepares partial booking request
+      | roomid      | <roomid>      |
+      | firstname   | <firstname>   |
+      | lastname    | <lastname>    |
+      | depositpaid | <depositpaid> |
+
+    When user sends a partial update request
+    Then booking response status code should be 405
+
+    Examples:
+      |roomid| firstname | lastname | depositpaid |
+      | 2 | John      | Doe      | true        |
+      | 2| Jane      | Smith    | false       |
+      | 2 | Sam       | NULL     | true        |
+      | 2| NULL      | Brown    | false       |
+      | 2 | Alice     | White    | NULL        |
+
+
+
+  @Regression
+  Scenario Outline: Delete Booking with Unauthorized, missing or invalid token
+    Given user provides invalid authentication token
+    When user delete booking request without token "<roomid>"
+    Then booking response status code should be 403
+
+    Examples:
+      | roomid |
+      | 1 |
+      | 2 |
+
+
+  @Regression @Positive
+  Scenario Outline: Delete Booking based on room Id
+    Given user delete booking request "<roomid>"
+    Then booking response status code should be 202
+
+    Examples:
+      | roomid |
+      | 1 |
+      | 2 |
+      | 3 |
+
+
+
+
+
+
+

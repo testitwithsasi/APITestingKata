@@ -187,8 +187,6 @@ public class Booking {
     @When("user sends a GET booking request without token")
     public void getBookingDetailsByIdWithoutToken() {
 
-        //ScenarioContext.clear();
-
         Response response = service.callAPI(
                 "BOOKING",
                 bookingId,
@@ -202,21 +200,9 @@ public class Booking {
     @When("user sends a PUT booking request")
     public void updateBookingRequest() {
 
-        LoginRequest loginRequest = new LoginRequest("admin", "password");
-        var authResponse = service.callAPI(
-                "AUTH",
-                null,
-                HttpMethod.POST,
-                ResponseUtil.getHeaders(),
-                loginRequest);
-
-        String token = ResponseUtil.getProperty(authResponse, "token", "NOT_FOUND");
-
         var headers = getHeaders();
         headers.remove("Cookie");
-        headers.put("Cookie", "token=" + token);
-
-        System.out.println("Update Bulk payload token: "+ token);
+        headers.put("Cookie", "token=" + ScenarioContext.getToken());
 
         String roomID = String.valueOf(request.getRoomId());
 
@@ -227,5 +213,63 @@ public class Booking {
                 HttpMethod.PUT,
                 headers,
                 request));
+    }
+
+    @Given("user prepares partial booking request")
+    public void preparePartialRequest(DataTable table){
+
+        Map<String, String> data = table.asMap(String.class, String.class);
+
+        request = new BookingRequest();
+        request.setRoomId(Integer.parseInt(data.get("roomid")));
+        request.setFirstname(data.get("firstname"));
+        request.setLastName(data.get("lastname"));
+        request.setDepositPaid(Boolean.parseBoolean(data.get("depositpaid")));
+    }
+
+    @When("user sends a partial update request")
+    public void sendPartialRequest(){
+
+        var headers = getHeaders();
+        headers.remove("Cookie");
+        headers.put("Cookie", "token=" + ScenarioContext.getToken());
+
+        String roomID = String.valueOf(request.getRoomId());
+
+        ScenarioContext.setResponse(service.callAPI(
+                "BOOKING",
+                ScenarioContext.getBookingIds(roomID),
+                HttpMethod.PATCH,
+                headers,
+                request));
+    }
+
+    @Given("user delete booking request {string}")
+    public void userProvidesRoomId(String roomId) {
+
+        var headers = getHeaders();
+        headers.remove("Cookie");
+        headers.put("Cookie", "token=" + ScenarioContext.getToken());
+
+        ScenarioContext.setResponse(service.callAPI(
+                "BOOKING",
+                ScenarioContext.getBookingIds(roomId),
+                HttpMethod.DELETE,
+                headers,
+                null));
+
+    }
+
+    @When("user delete booking request without token {string}")
+    public void deleteBookingRequestWithoutToken(String roomId) {
+        var headers = getHeaders();
+        headers.remove("Cookie");
+
+        ScenarioContext.setResponse(service.callAPI(
+                "BOOKING",
+                ScenarioContext.getBookingIds(roomId),
+                HttpMethod.DELETE,
+                headers,
+                null));
     }
 }
