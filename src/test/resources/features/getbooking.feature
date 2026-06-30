@@ -5,7 +5,7 @@ Feature: Get Booking
   Scenario Outline: Retrieve booking with valid booking id
     Given user provides booking id "<bookingId>"
     When user sends a GET booking request
-    Then booking response status code should be 200
+    Then the booking should be retrieved successfully
     And booking response should contain booking id "<bookingId>"
     And booking response should contain all mandatory fields
 
@@ -19,7 +19,7 @@ Feature: Get Booking
     Given user provides booking id "<bookingId>"
     And user provides invalid authentication token
     When user sends a GET booking request without token
-    Then booking response status code should be 403
+    Then access to booking should be denied
 
     Examples:
       | bookingId |
@@ -30,7 +30,7 @@ Feature: Get Booking
   Scenario Outline: Retrieve booking without authentication token
     Given user provides booking id "<bookingId>"
     When user sends a GET booking request without token
-    Then booking response status code should be 403
+    Then access to booking should be denied
 
     Examples:
       | bookingId |

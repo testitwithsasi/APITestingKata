@@ -14,7 +14,7 @@ Feature: Booking API
       | phone         | <phone>         |
 
     When user send a POST request
-    Then booking response status code should be 201
+    Then room booking should be created successfully
     And booking response should contain a booking id
     And booking response should match the request payload
 
@@ -36,7 +36,7 @@ Feature: Booking API
       | phone         | <phone>       |
 
     When user send a POST request
-    Then booking response status code should be 400
+    Then room booking should fail
     And booking response should contain validation error "<error>"
 
     Examples:
@@ -68,7 +68,7 @@ Feature: Booking API
       | phone         | <phone>       |
 
     When user send a POST request
-    Then booking response status code should be 409
+    Then room booking should be rejected
 
     Examples:
       | roomid  | firstname | lastname  | depositpaid |  checkin     | checkout    | email                     | phone        |

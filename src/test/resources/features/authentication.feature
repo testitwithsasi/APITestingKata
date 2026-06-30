@@ -6,7 +6,7 @@ Feature: Authentication
     Given user enters username "<username>"
     And user enters password "<password>"
     When user sends login request
-    Then response status code should be 200
+    Then user should be logged in successfully
     And authentication token should be generated
     And authentication token should not be empty
 
@@ -19,7 +19,7 @@ Feature: Authentication
     Given user enters username "<username>"
     And user enters password "<password>"
     When user sends login request
-    Then response status code should be 401
+    Then login should fail
     And response should contain error "Invalid credentials"
 
     Examples:

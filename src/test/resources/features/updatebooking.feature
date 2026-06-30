@@ -14,12 +14,12 @@ Feature: Update Booking
       | email       | <email>       |
       | phone       | <phone>       |
     When user sends a PUT booking request
-    Then booking response status code should be <statusCode>
+    Then the booking should be updated successfully
 
     Examples:
-      | bookingId | roomid | firstname | lastname | depositpaid | checkin   | checkout  | email                    | phone       | statusCode | Test Case |
-      | 2 | 2 | John | Smith | true | 2026-10-13 | 2026-10-15 | john@example.com | 09234567890 | 200 | Update lastname |
-      | 3 | 3 | John | Doe | true | 2026-10-13 | 2026-10-15 | john@example.com | 08234567890 | 200 | Update room id |
+      | bookingId | roomid | firstname | lastname | depositpaid | checkin   | checkout  | email                    | phone       |
+      | 2 | 2 | John | Smith | true | 2026-10-13 | 2026-10-15 | john@example.com | 09234567890 |
+      | 3 | 3 | John | Doe | true | 2026-10-13 | 2026-10-15 | john@example.com | 08234567890 |
 
   @Regression
   Scenario Outline: Update booking with invalid payload combinations
@@ -34,7 +34,7 @@ Feature: Update Booking
       | email       | <email>       |
       | phone       | <phone>       |
     When user sends a PUT booking request
-    Then booking response status code should be <statusCode>
+    Then the booking update should be rejected
 
     Examples:
       | bookingId | roomid | firstname | lastname | depositpaid | checkin   | checkout  | email                    | phone       | statusCode | Test Case |

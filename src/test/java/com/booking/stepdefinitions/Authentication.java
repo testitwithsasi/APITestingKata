@@ -44,16 +44,6 @@ public class Authentication {
                 request));
     }
 
-    @Then("response status code should be {int}")
-    public void verifyLoginRespStatusCode(int statusCode) {
-        Response response = ScenarioContext.getResponse();
-        if (ResponseUtil.isResponseNull(response)) {
-            assertEquals(response.getStatusCode(), statusCode, "Status Code Mismatch");
-        } else {
-            markResponseASFalse();
-        }
-    }
-
     @And("authentication token should be generated")
     public void verifyAndGetAuthToken() {
         Response response = ScenarioContext.getResponse();
@@ -93,6 +83,26 @@ public class Authentication {
                 assertFalse(error.isEmpty());
                 assertEquals(expectedError, error);
             }
+        } else {
+            markResponseASFalse();
+        }
+    }
+
+    @Then("user should be logged in successfully")
+    public void userShouldBeLoggedInSuccessfully() {
+        Response response = ScenarioContext.getResponse();
+        if (ResponseUtil.isResponseNull(response)) {
+            assertEquals(response.getStatusCode(), 200, "Status Code Mismatch");
+        } else {
+            markResponseASFalse();
+        }
+    }
+
+    @Then("login should fail")
+    public void loginShouldFail() {
+        Response response = ScenarioContext.getResponse();
+        if (ResponseUtil.isResponseNull(response)) {
+            assertEquals(response.getStatusCode(), 401, "Status Code Mismatch");
         } else {
             markResponseASFalse();
         }

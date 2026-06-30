@@ -53,6 +53,27 @@ public class Booking {
                 request));
     }
 
+    @Then("room booking should be created successfully")
+    public void checkCreateRoomBookingStatus() {
+        Response response = ScenarioContext.getResponse();
+        assertNotNull(response, "Response is NULL");
+        assertEquals(201, response.getStatusCode(),  "Status Code Mismatch");
+    }
+
+    @Then("room booking should fail")
+    public void roomBookingShouldFail() {
+        Response response = ScenarioContext.getResponse();
+        assertNotNull(response, "Response is NULL");
+        assertEquals(400, response.getStatusCode(),  "Status Code Mismatch");
+    }
+
+    @Then("room booking should be rejected")
+    public void roomBookingShouldBeRejected() {
+        Response response = ScenarioContext.getResponse();
+        assertNotNull(response, "Response is NULL");
+        assertEquals(409, response.getStatusCode(),  "Status Code Mismatch");
+    }
+
     @Then("booking response status code should be {int}")
     public void verifyBookingRespStatusCode(Integer expectedStatusCode) {
         Response response = ScenarioContext.getResponse();
@@ -121,6 +142,13 @@ public class Booking {
                 HttpMethod.GET,
                 headers,
                 null));
+    }
+
+    @Then("the booking should be retrieved successfully")
+    public void theBookingShouldBeRetrievedSuccessfully() {
+        Response response = ScenarioContext.getResponse();
+        assertNotNull(response, "Response is NULL");
+        assertEquals(200, response.getStatusCode(),  "Status Code Mismatch");
     }
 
     @And("booking response should contain booking id {string}")
@@ -276,5 +304,37 @@ public class Booking {
         userProvidesBookingId(String.valueOf(bookingResponse.getBookingId()));
 
         ScenarioContext.setBookingIds(String.valueOf(bookingResponse.getRoomId()), String.valueOf(bookingResponse.getBookingId()));
+    }
+
+
+    @Then("access to booking should be denied")
+    public void accessToBookingShouldBeDenied() {
+        Response response = ScenarioContext.getResponse();
+        assertNotNull(response, "Response is NULL");
+        assertEquals(403, response.getStatusCode(),  "Status Code Mismatch");
+    }
+
+    @Then("the booking should be updated successfully")
+    public void theBookingShouldBeUpdatedSuccessfully() {
+        theBookingShouldBeRetrievedSuccessfully();
+    }
+
+    @Then("the booking update should be rejected")
+    public void theBookingUpdateShouldBeRejected() {
+        roomBookingShouldFail();
+    }
+
+    @Then("room booking should be deleted successfully")
+    public void roomBookingShouldBeDeletedSuccessfully() {
+        Response response = ScenarioContext.getResponse();
+        assertNotNull(response, "Response is NULL");
+        assertEquals(202, response.getStatusCode(),  "Status Code Mismatch");
+    }
+
+    @Then("the booking should not be found")
+    public void theBookingShouldNotBeFound() {
+        Response response = ScenarioContext.getResponse();
+        assertNotNull(response, "Response is NULL");
+        assertEquals(404, response.getStatusCode(),  "Status Code Mismatch");
     }
 }
