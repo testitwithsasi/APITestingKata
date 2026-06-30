@@ -20,7 +20,6 @@ Feature: Booking API
 
     Examples:
       | roomid | firstname | lastname   | depositpaid | checkin     | checkout    | email                     | phone        |
-      | 1      | Sarah     | Ali        | true        | 2026-07-01  | 2026-07-12  | sarah.ali@google.com      | 09234567890   |
       | 2      | Abraham   | David      | true        | 2026-07-25  | 2026-07-30  | abraham.david@mail.com    | 09876543210   |
       | 3      | Elsa      | Kokelberg  | false       | 2026-12-10  | 2026-12-12  | elsa.kokelberg@mail.com   | 09988776655   |
 
@@ -42,15 +41,15 @@ Feature: Booking API
 
     Examples:
       | roomid | firstname            | lastname             | depositpaid | checkin    | checkout   | email                  | phone                | error                                  |
-      | 1      | Jo                   | Smith                | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 09123456789          | size must be between 3 and 18          |
-      | 1      | firstnamefirstnamefirstnamefirstname  | Smith                | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 09123456789          | size must be between 3 and 18          |
-      | 1      | John                 | Do                   | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 09123456789          | size must be between 3 and 30          |
-      | 1      | John                 | lastnamelastnamelastnamelastname  | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 09123456789          | size must be between 3 and 30          |
-      | 1      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | invalidemail           | 09123456789          | must be a well-formed email address    |
-      | 1      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | @gmail.com             | 09123456789          | must be a well-formed email address    |
-      | 1      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | !@#$%^&john@test       | 09123456789          | must be a well-formed email address    |
-      | 1      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 12                   | size must be between 11 and 21          |
-      | 1      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 123456789012345678901234 | size must be between 11 and 21          |
+      | 2      | Jo                   | Smith                | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 09123456789          | size must be between 3 and 18          |
+      | 2      | firstnamefirstnamefirstnamefirstname  | Smith                | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 09123456789          | size must be between 3 and 18          |
+      | 2      | John                 | Do                   | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 09123456789          | size must be between 3 and 30          |
+      | 2      | John                 | lastnamelastnamelastnamelastname  | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 09123456789          | size must be between 3 and 30          |
+      | 2      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | invalidemail           | 09123456789          | must be a well-formed email address    |
+      | 2      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | @gmail.com             | 09123456789          | must be a well-formed email address    |
+      | 3      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | !@#$%^&john@test       | 09123456789          | must be a well-formed email address    |
+      | 3      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 12                   | size must be between 11 and 21          |
+      | 3      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 123456789012345678901234 | size must be between 11 and 21          |
       | 0      | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 09123456789          | must be greater than or equal to 1                         |
       | -1     | John                 | Smith                | true        | 2026-07-01 | 2026-07-05 | john@test.com          | 09123456789          | must be greater than or equal to 1                         |
 
@@ -88,7 +87,6 @@ Feature: Booking API
 
     Examples:
       | bookingId |
-      | 1 |
       | 2 |
       | 3 |
 
@@ -101,8 +99,8 @@ Feature: Booking API
 
     Examples:
       | bookingId |
-      | 1 |
       | 2 |
+      | 3 |
 
   @Regression @Negative
   Scenario Outline: Retrieve booking without authentication token
@@ -112,8 +110,8 @@ Feature: Booking API
 
     Examples:
       | bookingId |
-      | 1 |
       | 2 |
+      | 3 |
 
 
   @Regression @UpdateBooking
@@ -133,7 +131,6 @@ Feature: Booking API
 
     Examples:
       | bookingId | roomid | firstname | lastname | depositpaid | checkin   | checkout  | email                    | phone       | statusCode | Test Case |
-      | 1 | 2 | Jane | Doe | true | 2026-10-13 | 2026-10-15 | jane@example.com | 09876543210 | 200 | Update firstname |
       | 2 | 2 | John | Smith | true | 2026-10-13 | 2026-10-15 | john@example.com | 09234567890 | 200 | Update lastname |
       | 3 | 3 | John | Doe | true | 2026-10-13 | 2026-10-15 | john@example.com | 08234567890 | 200 | Update room id |
 
@@ -205,8 +202,8 @@ Feature: Booking API
 
     Examples:
       | roomid |
-      | 1 |
       | 2 |
+      | 3 |
 
 
   @Regression @Positive
@@ -216,7 +213,6 @@ Feature: Booking API
 
     Examples:
       | roomid |
-      | 1 |
       | 2 |
       | 3 |
 

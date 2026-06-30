@@ -112,18 +112,8 @@ public class Booking {
     @When("user sends a GET booking request")
     public void getBookingDetailsById() {
 
-        LoginRequest loginRequest = new LoginRequest("admin", "password");
-        var authResponse = service.callAPI(
-                "AUTH",
-                null,
-                HttpMethod.POST,
-                ResponseUtil.getHeaders(),
-                loginRequest);
-
-        String token = ResponseUtil.getProperty(authResponse, "token", "NOT_FOUND");
-
         var headers = getHeaders();
-        headers.put("Cookie", "token=" + token);
+        headers.put("Cookie", "token=" + ScenarioContext.getToken());
 
         ScenarioContext.setResponse(service.callAPI(
                 "BOOKING"
@@ -147,6 +137,9 @@ public class Booking {
     public void validateAllResponseFields() {
 
         Response response = ScenarioContext.getResponse();
+        BookingResponse bookingResponse = JsonUtil.fromJson(response.asString(), BookingResponse.class);
+
+        ScenarioContext.setBookingIds(String.valueOf(bookingResponse.getRoomId()), String.valueOf(bookingResponse.getBookingId()));
 
         assertNotNull(response.jsonPath().get("bookingid"));
         assertNotNull(response.jsonPath().get("roomid"));
@@ -271,5 +264,17 @@ public class Booking {
                 HttpMethod.DELETE,
                 headers,
                 null));
+    }
+
+    @And("user stores the booking id")
+    public void usrStoreBookingId() {
+
+        Response response = ScenarioContext.getResponse();
+
+        BookingResponse bookingResponse = JsonUtil.fromJson(response.asString(), BookingResponse.class);
+
+        userProvidesBookingId(String.valueOf(bookingResponse.getBookingId()));
+
+        ScenarioContext.setBookingIds(String.valueOf(bookingResponse.getRoomId()), String.valueOf(bookingResponse.getBookingId()));
     }
 }
