@@ -12,7 +12,7 @@ public class HealthCheck {
 
     public Response response;
 
-    @Given("send GET request to the health endpoint")
+    @Given("user send a request")
     public void sendRequest() {
         ApiService service = new ApiService();
 

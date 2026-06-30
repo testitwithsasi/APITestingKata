@@ -10,7 +10,7 @@ Feature: Partial update
       | depositpaid | <depositpaid> |
 
     When user sends a partial update request
-    Then booking response status code should be 405
+    Then booking details should get updated successfully
 
     Examples:
       |roomid| firstname | lastname | depositpaid |

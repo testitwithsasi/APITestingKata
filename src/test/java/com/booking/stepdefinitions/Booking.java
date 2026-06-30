@@ -23,7 +23,7 @@ public class Booking {
     private String bookingId;
 
 
-    @Given("user prepares booking request")
+    @Given("the user provides the booking information")
     public void prepareRoomBookingRequest(DataTable dataTable) {
 
         Map<String, String> data = dataTable.asMap(String.class, String.class);
@@ -42,7 +42,7 @@ public class Booking {
         request.setPhoneNumber(data.get("phone"));
     }
 
-    @When("user send a POST request")
+    @When("user sends a request")
     public void sendBookingRequest() {
 
         ScenarioContext.setResponse(service.callAPI(
@@ -72,13 +72,6 @@ public class Booking {
         Response response = ScenarioContext.getResponse();
         assertNotNull(response, "Response is NULL");
         assertEquals(409, response.getStatusCode(),  "Status Code Mismatch");
-    }
-
-    @Then("booking response status code should be {int}")
-    public void verifyBookingRespStatusCode(Integer expectedStatusCode) {
-        Response response = ScenarioContext.getResponse();
-        assertNotNull(response, "Response is NULL");
-        assertEquals(expectedStatusCode, response.getStatusCode(), "Status Code Mismatch");
     }
 
     @Then("booking response should contain a booking id")
@@ -130,7 +123,7 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    @When("user sends a GET booking request")
+    @When("the user retrieves the booking")
     public void getBookingDetailsById() {
 
         var headers = getHeaders();
@@ -205,7 +198,7 @@ public class Booking {
         assertTrue(response.getContentType().contains(contentType));
     }
 
-    @When("user sends a GET booking request without token")
+    @When("user requests a booking without token")
     public void getBookingDetailsByIdWithoutToken() {
 
         Response response = service.callAPI(
@@ -218,7 +211,7 @@ public class Booking {
         ScenarioContext.setResponse(response);
     }
 
-    @When("user sends a PUT booking request")
+    @When("the user requests to update the booking")
     public void updateBookingRequest() {
 
         var headers = getHeaders();
@@ -336,5 +329,16 @@ public class Booking {
         Response response = ScenarioContext.getResponse();
         assertNotNull(response, "Response is NULL");
         assertEquals(404, response.getStatusCode(),  "Status Code Mismatch");
+    }
+
+    @Then("booking details should get updated successfully")
+    public void partialUpdateStatus(){
+        Response response = ScenarioContext.getResponse();
+        assertNotNull(response, "Response is NULL");
+        String errMsg ="";
+        if(response.getStatusCode() != 202){
+            errMsg = response.jsonPath().get("error");
+        }
+        assertEquals(202, response.getStatusCode(), errMsg);
     }
 }

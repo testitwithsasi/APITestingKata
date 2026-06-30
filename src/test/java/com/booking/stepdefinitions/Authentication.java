@@ -1,15 +1,20 @@
 package com.booking.stepdefinitions;
 
+import com.booking.models.BookingRequest;
 import com.booking.models.LoginRequest;
 import com.booking.serviceapi.ApiService;
 import com.booking.serviceapi.HttpMethod;
 import com.booking.utils.ResponseUtil;
 import com.booking.utils.ScenarioContext;
 import groovy.util.logging.Slf4j;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 import io.restassured.response.Response;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import javax.xml.crypto.Data;
+import java.util.Map;
 
 import static com.booking.utils.ResponseUtil.markResponseASFalse;
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,20 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class Authentication {
 
     private static final Log log = LogFactory.getLog(Authentication.class);
-    private LoginRequest request;
+    private LoginRequest request = new LoginRequest("admin", "password");
     ApiService service = new ApiService();
-
-    @Given("user enters username {string}")
-    public void setUserUsername(String username) {
-        if (request == null) request = new LoginRequest();
-        request.setUsername(username);
-    }
-
-    @And("user enters password {string}")
-    public void setUserPassword(String password) {
-        if (request == null) request = new LoginRequest();
-        request.setPassword(password);
-    }
 
     @When("user sends login request")
     public void sendLoginRequest() {
@@ -44,7 +37,17 @@ public class Authentication {
                 request));
     }
 
-    @And("authentication token should be generated")
+    @Then("the user should be logged in successfully")
+    public void userShouldBeLoggedInSuccessfully() {
+        Response response = ScenarioContext.getResponse();
+        if (ResponseUtil.isResponseNull(response)) {
+            assertEquals(response.getStatusCode(), 200, "Status Code Mismatch");
+        } else {
+            markResponseASFalse();
+        }
+    }
+
+    @And("the user should be granted access to the booking system")
     public void verifyAndGetAuthToken() {
         Response response = ScenarioContext.getResponse();
         if (ResponseUtil.isResponseNull(response)) {
@@ -72,6 +75,16 @@ public class Authentication {
         }
     }
 
+    @Given("the user provides the following credentials")
+    public void userInvalidCredentials(DataTable dataTable){
+        Map<String, String> data = dataTable.asMap(String.class, String.class);
+
+        request = new LoginRequest();
+        request.setUsername(data.get("username"));
+        request.setPassword(data.get("password"));
+
+    }
+
     @And("response should contain error {string}")
     public void validateErrorResponse(String expectedError) {
         Response response = ScenarioContext.getResponse();
@@ -88,16 +101,6 @@ public class Authentication {
         }
     }
 
-    @Then("user should be logged in successfully")
-    public void userShouldBeLoggedInSuccessfully() {
-        Response response = ScenarioContext.getResponse();
-        if (ResponseUtil.isResponseNull(response)) {
-            assertEquals(response.getStatusCode(), 200, "Status Code Mismatch");
-        } else {
-            markResponseASFalse();
-        }
-    }
-
     @Then("login should fail")
     public void loginShouldFail() {
         Response response = ScenarioContext.getResponse();
@@ -107,4 +110,7 @@ public class Authentication {
             markResponseASFalse();
         }
     }
+
+
+
 }

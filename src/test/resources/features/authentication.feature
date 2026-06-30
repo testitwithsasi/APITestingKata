@@ -2,22 +2,17 @@
 Feature: Authentication
 
   @Smoke @Regression @Positive
-  Scenario Outline: Login with valid credentials
-    Given user enters username "<username>"
-    And user enters password "<password>"
-    When user sends login request
-    Then user should be logged in successfully
-    And authentication token should be generated
+  Scenario: Login with valid credentials
+    Given user sends login request
+    Then the user should be logged in successfully
+    And the user should be granted access to the booking system
     And authentication token should not be empty
-
-    Examples:
-      | username | password |
-      |  admin   | password |
 
   @Validation @Negative
   Scenario Outline: Login with invalid credentials
-    Given user enters username "<username>"
-    And user enters password "<password>"
+    Given the user provides the following credentials
+      | username       |   password     |
+      | <username>     |   <password>   |
     When user sends login request
     Then login should fail
     And response should contain error "Invalid credentials"

@@ -3,7 +3,7 @@ Feature: Booking API
 
   @Smoke @Regression @Positive
   Scenario Outline: Create booking with valid payload like future, long stay
-    Given user prepares booking request
+    Given the user provides the booking information
       | roomid        | <roomid>        |
       | firstname     | <firstname>     |
       | lastname      | <lastname>      |
@@ -13,7 +13,7 @@ Feature: Booking API
       | email         | <email>         |
       | phone         | <phone>         |
 
-    When user send a POST request
+    When user sends a request
     Then room booking should be created successfully
     And booking response should contain a booking id
     And booking response should match the request payload
@@ -25,7 +25,7 @@ Feature: Booking API
 
   @Negative
   Scenario Outline: Create booking with invalid payload
-    Given user prepares booking request
+    Given the user provides the booking information
       | roomid        | <roomid>      |
       | firstname     | <firstname>   |
       | lastname      | <lastname>    |
@@ -35,7 +35,7 @@ Feature: Booking API
       | email         | <email>       |
       | phone         | <phone>       |
 
-    When user send a POST request
+    When user sends a request
     Then room booking should fail
     And booking response should contain validation error "<error>"
 
@@ -57,7 +57,7 @@ Feature: Booking API
 
   @Negative
   Scenario Outline: Create booking when checkOut date is not after checkIn date and also with same dates
-    Given user prepares booking request
+    Given the user provides the booking information
       | roomid        | <roomid>      |
       | firstname     | <firstname>   |
       | lastname      | <lastname>    |
@@ -67,7 +67,7 @@ Feature: Booking API
       | email         | <email>       |
       | phone         | <phone>       |
 
-    When user send a POST request
+    When user sends a request
     Then room booking should be rejected
 
     Examples:
