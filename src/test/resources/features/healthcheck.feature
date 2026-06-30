@@ -1,4 +1,4 @@
-@Health
+@BookingSuite @Health
 Feature: Health Checkup API
 
   @Smoke @Regression @Positive

@@ -81,6 +81,12 @@ The framework follows the Page Object-like design for APIs by separating feature
 mvn clean test
 ```
 
+## To run whole tests by common tag
+```
+mvn clean test -Dcucumber.filter.tags=@BookingSuite
+```
+
+
 # Reporting
 ## Generate Allure results
 ```

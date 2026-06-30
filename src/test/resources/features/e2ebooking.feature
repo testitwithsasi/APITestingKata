@@ -1,6 +1,7 @@
+@BookingSuite @E2E
 Feature: Booking End-to-End Flow
 
-  @E2E @Regression
+  @Regression @Positive
   Scenario Outline: Verify complete booking lifecycle like Create, Retrieve, Update and Delete Booking successfully
 
     # Create Booking

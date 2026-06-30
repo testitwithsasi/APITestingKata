@@ -15,9 +15,9 @@ import static com.booking.utils.ResponseUtil.markResponseASFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
-public class AuthenticationTest {
+public class Authentication {
 
-    private static final Log log = LogFactory.getLog(AuthenticationTest.class);
+    private static final Log log = LogFactory.getLog(Authentication.class);
     private LoginRequest request;
     ApiService service = new ApiService();
 

@@ -1,4 +1,4 @@
-@Auth
+@BookingSuite @Auth
 Feature: Authentication
 
   @Smoke @Regression @Positive
